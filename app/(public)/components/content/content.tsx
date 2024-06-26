@@ -6,14 +6,20 @@ interface ContentProps {
   searchParams: any;
 }
 
-
-const ProductCard = dynamic(() => import("@/components/melecules/product-card"), { ssr: false })
-
+const ProductCard = dynamic(
+  () => import("@/components/melecules/product-card"),
+  { ssr: false },
+);
 
 export default async function Content(params: ContentProps) {
-  const data = await fetch(process.env.HOSTNAME + "/api/product?" + querystring.stringify(params.searchParams), { cache: 'no-store' })
-                      .then((res) => res?.json())
-                      .catch(_ => { return {} })
+  const data = await fetch(
+    "/api/product?" + querystring.stringify(params.searchParams),
+    { cache: "no-store" },
+  )
+    .then((res) => res?.json())
+    .catch((_) => {
+      return {};
+    });
 
   return (
     <div className={styles.page}>
